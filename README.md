@@ -22,6 +22,35 @@ A Jupyter kernel for Clojure - run Clojure code in Jupyter Lab, Notebook and Con
 
 ## Getting Started
 
+### NOTE
+
+I got it working as follows:
+
+1. download Anaconda
+2. activate env (shows as ~base in terminal)
+3. fork https://github.com/clojupyter/clojupyter
+4. fix issue same as in the PR , ie remove dependency on maven and jdk v8 in src/clojupyter/install/conda/yaml.clj to  (def- BUILD-DEPS ["openjdk"])
+5. run make clean
+6. make install
+7. BUILDNUM=1 make conda-build   (any random BUILDNUM that is an integer > 0 seems to work)
+
+Step 7. will build a kernel (in this case v0.3.7-SNAPSHOT@v0.2.2-86-ge968, and it should print sth like this if successful:
+```lein clojupyter conda-build --buildnum "1"
+If there are a lot of uncached dependencies this might take a while ...
+WARNING: parse-boolean already refers to: #'clojure.core/parse-boolean in namespace: omniconf.core, being replaced by: #'omniconf.core/parse-boolean
+Clojupyter v0.3.7-SNAPSHOT@v0.2.2-86-ge968 - Build Conda package
+
+    Conda build completed successfully.
+    Conda file output to \
+
+exit(0)
+```
+8. install jupyter
+9. run jupyter-lab or jupyter notebook
+
+
+### END OF NOTE
+
 In the `examples` folder of the repository are there 3 example notebooks showing some of the
 features of clojupyter.  See [this
 notebook](https://github.com/clojupyter/clojupyter/blob/master/examples/demo-clojupyter.ipynb)
